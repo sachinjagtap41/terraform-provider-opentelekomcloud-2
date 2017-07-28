@@ -10,7 +10,6 @@ import (
 
 	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/openstack"
-	"github.com/gophercloud/gophercloud/openstack/objectstorage/v1/swauth"
 	"github.com/hashicorp/terraform/helper/pathorcontents"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -144,62 +143,13 @@ func (c *Config) determineRegion(region string) string {
 		region = c.Region
 	}
 
-	log.Printf("[DEBUG] OpenStack Region is: %s", region)
+	log.Printf("[DEBUG] HWCloud Region is: %s", region)
 	return region
 }
 
-func (c *Config) blockStorageV1Client(region string) (*gophercloud.ServiceClient, error) {
-	return openstack.NewBlockStorageV1(c.OsClient, gophercloud.EndpointOpts{
-		Region:       c.determineRegion(region),
-		Availability: c.getEndpointType(),
-	})
-}
-
-func (c *Config) blockStorageV2Client(region string) (*gophercloud.ServiceClient, error) {
-	return openstack.NewBlockStorageV2(c.OsClient, gophercloud.EndpointOpts{
-		Region:       c.determineRegion(region),
-		Availability: c.getEndpointType(),
-	})
-}
-
-func (c *Config) computeV2Client(region string) (*gophercloud.ServiceClient, error) {
-	return openstack.NewComputeV2(c.OsClient, gophercloud.EndpointOpts{
-		Region:       c.determineRegion(region),
-		Availability: c.getEndpointType(),
-	})
-}
-
-func (c *Config) dnsV2Client(region string) (*gophercloud.ServiceClient, error) {
-	return openstack.NewDNSV2(c.OsClient, gophercloud.EndpointOpts{
-		Region:       c.determineRegion(region),
-		Availability: c.getEndpointType(),
-	})
-}
-
 func (c *Config) imageV2Client(region string) (*gophercloud.ServiceClient, error) {
+	log.Printf("[DEBUG] region %s is %s.", region, c.determineRegion(region))
 	return openstack.NewImageServiceV2(c.OsClient, gophercloud.EndpointOpts{
-		Region:       c.determineRegion(region),
-		Availability: c.getEndpointType(),
-	})
-}
-
-func (c *Config) networkingV2Client(region string) (*gophercloud.ServiceClient, error) {
-	return openstack.NewNetworkV2(c.OsClient, gophercloud.EndpointOpts{
-		Region:       c.determineRegion(region),
-		Availability: c.getEndpointType(),
-	})
-}
-
-func (c *Config) objectStorageV1Client(region string) (*gophercloud.ServiceClient, error) {
-	// If Swift Authentication is being used, return a swauth client.
-	if c.Swauth {
-		return swauth.NewObjectStorageV1(c.OsClient, swauth.AuthOpts{
-			User: c.Username,
-			Key:  c.Password,
-		})
-	}
-
-	return openstack.NewObjectStorageV1(c.OsClient, gophercloud.EndpointOpts{
 		Region:       c.determineRegion(region),
 		Availability: c.getEndpointType(),
 	})

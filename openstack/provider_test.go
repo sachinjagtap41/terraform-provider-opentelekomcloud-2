@@ -112,14 +112,14 @@ func TestProvider_impl(t *testing.T) {
 	var _ terraform.ResourceProvider = Provider()
 }
 
-// Steps for configuring OpenStack with SSL validation are here:
+// Steps for configuring hwcloud with SSL validation are here:
 // https://github.com/hashicorp/terraform/pull/6279#issuecomment-219020144
 func TestAccProvider_caCertFile(t *testing.T) {
 	if os.Getenv("TF_ACC") == "" || os.Getenv("OS_SSL_TESTS") == "" {
-		t.Skip("TF_ACC or OS_SSL_TESTS not set, skipping OpenStack SSL test.")
+		t.Skip("TF_ACC or OS_SSL_TESTS not set, skipping HWCloud SSL test.")
 	}
 	if os.Getenv("OS_CACERT") == "" {
-		t.Skip("OS_CACERT is not set; skipping OpenStack CA test.")
+		t.Skip("OS_CACERT is not set; skipping HWCloud CA test.")
 	}
 
 	p := Provider()
@@ -140,16 +140,16 @@ func TestAccProvider_caCertFile(t *testing.T) {
 
 	err = p.Configure(terraform.NewResourceConfig(rawConfig))
 	if err != nil {
-		t.Fatalf("Unexpected err when specifying OpenStack CA by file: %s", err)
+		t.Fatalf("Unexpected err when specifying HWCloud CA by file: %s", err)
 	}
 }
 
 func TestAccProvider_caCertString(t *testing.T) {
 	if os.Getenv("TF_ACC") == "" || os.Getenv("OS_SSL_TESTS") == "" {
-		t.Skip("TF_ACC or OS_SSL_TESTS not set, skipping OpenStack SSL test.")
+		t.Skip("TF_ACC or OS_SSL_TESTS not set, skipping HWCloud SSL test.")
 	}
 	if os.Getenv("OS_CACERT") == "" {
-		t.Skip("OS_CACERT is not set; skipping OpenStack CA test.")
+		t.Skip("OS_CACERT is not set; skipping HWCloud CA test.")
 	}
 
 	p := Provider()
@@ -168,16 +168,16 @@ func TestAccProvider_caCertString(t *testing.T) {
 
 	err = p.Configure(terraform.NewResourceConfig(rawConfig))
 	if err != nil {
-		t.Fatalf("Unexpected err when specifying OpenStack CA by string: %s", err)
+		t.Fatalf("Unexpected err when specifying HWCloud CA by string: %s", err)
 	}
 }
 
 func TestAccProvider_clientCertFile(t *testing.T) {
 	if os.Getenv("TF_ACC") == "" || os.Getenv("OS_SSL_TESTS") == "" {
-		t.Skip("TF_ACC or OS_SSL_TESTS not set, skipping OpenStack SSL test.")
+		t.Skip("TF_ACC or OS_SSL_TESTS not set, skipping HWCloud SSL test.")
 	}
 	if os.Getenv("OS_CERT") == "" || os.Getenv("OS_KEY") == "" {
-		t.Skip("OS_CERT or OS_KEY is not set; skipping OpenStack client SSL auth test.")
+		t.Skip("OS_CERT or OS_KEY is not set; skipping HWCloud client SSL auth test.")
 	}
 
 	p := Provider()
@@ -204,16 +204,16 @@ func TestAccProvider_clientCertFile(t *testing.T) {
 
 	err = p.Configure(terraform.NewResourceConfig(rawConfig))
 	if err != nil {
-		t.Fatalf("Unexpected err when specifying OpenStack Client keypair by file: %s", err)
+		t.Fatalf("Unexpected err when specifying HWCloud Client keypair by file: %s", err)
 	}
 }
 
 func TestAccProvider_clientCertString(t *testing.T) {
 	if os.Getenv("TF_ACC") == "" || os.Getenv("OS_SSL_TESTS") == "" {
-		t.Skip("TF_ACC or OS_SSL_TESTS not set, skipping OpenStack SSL test.")
+		t.Skip("TF_ACC or OS_SSL_TESTS not set, skipping HWCloud SSL test.")
 	}
 	if os.Getenv("OS_CERT") == "" || os.Getenv("OS_KEY") == "" {
-		t.Skip("OS_CERT or OS_KEY is not set; skipping OpenStack client SSL auth test.")
+		t.Skip("OS_CERT or OS_KEY is not set; skipping HWCloud client SSL auth test.")
 	}
 
 	p := Provider()
@@ -238,7 +238,7 @@ func TestAccProvider_clientCertString(t *testing.T) {
 
 	err = p.Configure(terraform.NewResourceConfig(rawConfig))
 	if err != nil {
-		t.Fatalf("Unexpected err when specifying OpenStack Client keypair by contents: %s", err)
+		t.Fatalf("Unexpected err when specifying HWCloud Client keypair by contents: %s", err)
 	}
 }
 
