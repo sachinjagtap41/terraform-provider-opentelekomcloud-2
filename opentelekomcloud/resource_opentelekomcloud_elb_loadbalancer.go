@@ -7,8 +7,8 @@ import (
 
 	"github.com/hashicorp/terraform/helper/schema"
 
+	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/elbaas/loadbalancer_elbs"
 	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/elbaas/loadbalancer_elbs"
 )
 
 func resourceELoadBalancer() *schema.Resource {

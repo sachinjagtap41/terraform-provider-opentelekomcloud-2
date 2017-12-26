@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
+	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/fwaas_v2/policies"
 	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/fwaas_v2/policies"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/helper/schema"
 )

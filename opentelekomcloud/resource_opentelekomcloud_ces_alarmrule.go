@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/gophercloud/gophercloud/openstack/cloudeyeservice/alarmrule"
+	"github.com/gator1/huaweicloud/openstack/cloudeyeservice/alarmrule"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/helper/schema"
 )

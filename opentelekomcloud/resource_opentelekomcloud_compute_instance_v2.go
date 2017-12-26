@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/gator1/huaweicloud/openstack/compute/v2/extensions/tags"
 	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/availabilityzones"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/bootfromvolume"
@@ -16,7 +17,6 @@ import (
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/schedulerhints"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/secgroups"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/startstop"
-	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/tags"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/flavors"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/images"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/servers"

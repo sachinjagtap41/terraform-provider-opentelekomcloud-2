@@ -8,8 +8,8 @@ import (
 	// "github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/helper/schema"
 
+	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/elbaas/backendmember"
 	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/networking/v2/extensions/elbaas/backendmember"
 )
 
 const loadbalancerActiveTimeoutSeconds = 300

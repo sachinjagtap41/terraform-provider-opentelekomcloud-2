@@ -6,8 +6,8 @@ import (
 	"log"
 	"time"
 
+	"github.com/gator1/huaweicloud/openstack/blockstorage/v2/tags"
 	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/blockstorage/v2/tags"
 	"github.com/gophercloud/gophercloud/openstack/blockstorage/v2/volumes"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/volumeattach"
 	"github.com/hashicorp/terraform/helper/hashcode"
