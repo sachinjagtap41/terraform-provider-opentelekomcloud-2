@@ -4,21 +4,23 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"log"
-	"net/http"
-	"os"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/gator1/huaweicloud"
+	"github.com/gator1/huaweicloud/huaweistack"
 	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/openstack"
 	"github.com/gophercloud/gophercloud/openstack/objectstorage/v1/swauth"
+	//"github.com/gophercloud/utils/openstack/clientconfig"
 	"github.com/hashicorp/errwrap"
 	"github.com/hashicorp/go-cleanhttp"
 	"github.com/hashicorp/terraform/helper/pathorcontents"
 	"github.com/hashicorp/terraform/terraform"
+	"log"
+	"net/http"
+	"os"
 	"strings"
 )
 
@@ -41,6 +43,7 @@ type Config struct {
 	Token            string
 	Username         string
 	UserID           string
+	useOctavia       bool
 
 	OsClient *gophercloud.ProviderClient
 	s3sess   *session.Session
@@ -303,15 +306,29 @@ func (c *Config) objectStorageV1Client(region string) (*gophercloud.ServiceClien
 	})
 }
 
-func (c *Config) otcV1Client(region string) (*gophercloud.ServiceClient, error) {
-	return openstack.NewOtcV1(c.OsClient, gophercloud.EndpointOpts{
+func (c *Config) loadBalancerV2Client(region string) (*gophercloud.ServiceClient, error) {
+	return openstack.NewLoadBalancerV2(c.OsClient, gophercloud.EndpointOpts{
+		Region:       c.determineRegion(region),
+		Availability: c.getEndpointType(),
+	})
+}
+
+func (c *Config) databaseV1Client(region string) (*gophercloud.ServiceClient, error) {
+	return openstack.NewDBV1(c.OsClient, gophercloud.EndpointOpts{
+		Region:       c.determineRegion(region),
+		Availability: c.getEndpointType(),
+	})
+}
+
+func (c *Config) otcV1Client(region string) (*huaweicloud.ServiceClient1, error) {
+	return huaweistack.NewOtcV1(c.OsClient, gophercloud.EndpointOpts{
 		Region:       c.determineRegion(region),
 		Availability: c.getEndpointType(),
 	}, "elb")
 }
 
 func (c *Config) otcSmnV2Client(region string) (*gophercloud.ServiceClient, error) {
-	return openstack.NewSmnServiceV2(c.OsClient, gophercloud.EndpointOpts{
+	return huaweistack.NewSmnServiceV2(c.OsClient, gophercloud.EndpointOpts{
 		Region:       c.determineRegion(region),
 		Availability: c.getEndpointType(),
 	})
@@ -327,8 +344,8 @@ func (c *Config) getEndpointType() gophercloud.Availability {
 	return gophercloud.AvailabilityPublic
 }
 
-func (c *Config) loadCESClient(region string) (*gophercloud.ServiceClient, error) {
-	return openstack.NewCESClient(c.OsClient, gophercloud.EndpointOpts{
+func (c *Config) loadCESClient(region string) (*huaweicloud.ServiceClient1, error) {
+	return huaweistack.NewCESClient(c.OsClient, gophercloud.EndpointOpts{
 		Region:       c.determineRegion(region),
 		Availability: c.getEndpointType(),
 	})

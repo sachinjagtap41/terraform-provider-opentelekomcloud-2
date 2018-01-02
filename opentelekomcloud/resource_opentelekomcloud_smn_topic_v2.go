@@ -6,7 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform/helper/schema"
 
-	"github.com/gator1/huaweicloud/openstack/smn/v2/topics"
+	"github.com/gator1/huaweicloud/huaweistack/smn/v2/topics"
 )
 
 func resourceTopic() *schema.Resource {

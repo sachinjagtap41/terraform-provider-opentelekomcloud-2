@@ -7,8 +7,9 @@ import (
 
 	"github.com/hashicorp/terraform/helper/schema"
 
-	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/elbaas/loadbalancer_elbs"
-	"github.com/gophercloud/gophercloud"
+	"github.com/gator1/huaweicloud"
+	"github.com/gator1/huaweicloud/huaweistack/networking/v2/extensions/elbaas/loadbalancer_elbs"
+	// "github.com/gophercloud/gophercloud"
 )
 
 func resourceELoadBalancer() *schema.Resource {
@@ -128,11 +129,11 @@ func resourceELoadBalancerCreate(d *schema.ResourceData, meta interface{}) error
 		return err
 	}
 
-	if err := gophercloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
+	if err := huaweicloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
 		return err
 	}
 
-	entity, err := gophercloud.GetJobEntity(client, job.URI, "elb")
+	entity, err := huaweicloud.GetJobEntity(client, job.URI, "elb")
 
 	if mlb, ok := entity.(map[string]interface{}); ok {
 		if vid, ok := mlb["id"]; ok {
@@ -205,7 +206,7 @@ func resourceELoadBalancerUpdate(d *schema.ResourceData, meta interface{}) error
 
 	log.Printf("[DEBUG] Updating loadbalancer %s with options: %#v", d.Id(), updateOpts)
 	job, err := loadbalancer_elbs.Update(client, d.Id(), updateOpts).ExtractJobResponse()
-	if err := gophercloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
+	if err := huaweicloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
 		return err
 	}
 
@@ -228,7 +229,7 @@ func resourceELoadBalancerDelete(d *schema.ResourceData, meta interface{}) error
 
 	log.Printf("Waiting for loadbalancer %s to delete", id)
 
-	if err := gophercloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
+	if err := huaweicloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
 		return err
 	}
 

@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/fwaas_v2/firewall_groups"
-	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/fwaas_v2/routerinsertion"
+	"github.com/gator1/huaweicloud/huaweistack/networking/v2/extensions/fwaas_v2/firewall_groups"
+	"github.com/gator1/huaweicloud/huaweistack/networking/v2/extensions/fwaas_v2/routerinsertion"
 	"github.com/gophercloud/gophercloud"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/helper/schema"

@@ -7,11 +7,12 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/gator1/huaweicloud"
 	"github.com/gophercloud/gophercloud"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
-func chooseCESClient(d *schema.ResourceData, config *Config) (*gophercloud.ServiceClient, error) {
+func chooseCESClient(d *schema.ResourceData, config *Config) (*huaweicloud.ServiceClient1, error) {
 	return config.loadCESClient(GetRegion(d, config))
 }
 

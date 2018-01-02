@@ -9,9 +9,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/gator1/huaweicloud/openstack/compute/v2/extensions/tags"
+	"github.com/gator1/huaweicloud/huaweistack/compute/v2/extensions/availabilityzones"
+	"github.com/gator1/huaweicloud/huaweistack/compute/v2/extensions/tags"
 	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/availabilityzones"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/bootfromvolume"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/keypairs"
 	"github.com/gophercloud/gophercloud/openstack/compute/v2/extensions/schedulerhints"

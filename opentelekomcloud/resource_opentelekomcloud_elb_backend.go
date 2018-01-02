@@ -8,8 +8,9 @@ import (
 	// "github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/helper/schema"
 
-	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/elbaas/backendmember"
-	"github.com/gophercloud/gophercloud"
+	"github.com/gator1/huaweicloud"
+	"github.com/gator1/huaweicloud/huaweistack/networking/v2/extensions/elbaas/backendmember"
+	// "github.com/gophercloud/gophercloud"
 )
 
 const loadbalancerActiveTimeoutSeconds = 300
@@ -68,11 +69,11 @@ func resourceBackendCreate(d *schema.ResourceData, meta interface{}) error {
 	}
 
 	log.Printf("Waiting for backend to become active")
-	if err := gophercloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
+	if err := huaweicloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
 		return err
 	}
 
-	entity, err := gophercloud.GetJobEntity(client, job.URI, "members")
+	entity, err := huaweicloud.GetJobEntity(client, job.URI, "members")
 
 	if members, ok := entity.([]interface{}); ok {
 		if len(members) > 0 {
@@ -131,7 +132,7 @@ func resourceBackendDelete(d *schema.ResourceData, meta interface{}) error {
 
 	log.Printf("Waiting for backend member %s to delete", id)
 
-	if err := gophercloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
+	if err := huaweicloud.WaitForJobSuccess(client, job.URI, loadbalancerActiveTimeoutSeconds); err != nil {
 		return err
 	}
 

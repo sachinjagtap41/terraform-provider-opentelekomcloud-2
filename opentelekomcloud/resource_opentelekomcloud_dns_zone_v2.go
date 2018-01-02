@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/gator1/huaweicloud/huaweistack/dns/v2/zones"
 	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/openstack/dns/v2/zones"
 
@@ -197,7 +198,7 @@ func resourceDNSZoneV2Read(d *schema.ResourceData, meta interface{}) error {
 		return fmt.Errorf("Error creating OpenTelekomCloud DNS client: %s", err)
 	}
 
-	n, err := zones.Get(dnsClient, d.Id()).Extract()
+	n, err := private_zones.Get(dnsClient, d.Id()).Extract()
 	if err != nil {
 		return CheckDeleted(d, err, "zone")
 	}

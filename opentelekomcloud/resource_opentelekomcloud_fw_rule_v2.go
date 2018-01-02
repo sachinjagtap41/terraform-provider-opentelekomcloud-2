@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/fwaas_v2/policies"
-	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/fwaas_v2/rules"
+	"github.com/gator1/huaweicloud/huaweistack/networking/v2/extensions/fwaas_v2/policies"
+	"github.com/gator1/huaweicloud/huaweistack/networking/v2/extensions/fwaas_v2/rules"
 	"github.com/gophercloud/gophercloud"
 	"github.com/hashicorp/terraform/helper/schema"
 )

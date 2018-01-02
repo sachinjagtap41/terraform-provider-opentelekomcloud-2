@@ -155,7 +155,6 @@ func resourceNetworkingPortV2Create(d *schema.ResourceData, meta interface{}) er
 			MACAddress:          d.Get("mac_address").(string),
 			TenantID:            d.Get("tenant_id").(string),
 			DeviceOwner:         d.Get("device_owner").(string),
-			SecurityGroups:      resourcePortSecurityGroupsV2(d),
 			DeviceID:            d.Get("device_id").(string),
 			FixedIPs:            resourcePortFixedIpsV2(d),
 			AllowedAddressPairs: resourceAllowedAddressPairsV2(d),
@@ -253,10 +252,12 @@ func resourceNetworkingPortV2Update(d *schema.ResourceData, meta interface{}) er
 	// to denote the removal of each. But their default zero-value is translated
 	// to "null", which has been reported to cause problems in vendor-modified
 	// OpenTelekomCloud clouds. Therefore, we must set them in each request update.
-	updateOpts := ports.UpdateOpts{
-		AllowedAddressPairs: resourceAllowedAddressPairsV2(d),
-		SecurityGroups:      resourcePortSecurityGroupsV2(d),
-	}
+	var updateOpts ports.UpdateOpts
+	aap := resourceAllowedAddressPairsV2(d)
+	updateOpts.AllowedAddressPairs = &aap
+	sgs := d.Get("security_group_ids").(*schema.Set)
+	securityGroups := resourcePortSecurityGroupsV2(sgs)
+	updateOpts.SecurityGroups = &securityGroups
 
 	if d.HasChange("name") {
 		updateOpts.Name = d.Get("name").(string)
@@ -318,13 +319,12 @@ func resourceNetworkingPortV2Delete(d *schema.ResourceData, meta interface{}) er
 	return nil
 }
 
-func resourcePortSecurityGroupsV2(d *schema.ResourceData) []string {
-	rawSecurityGroups := d.Get("security_group_ids").(*schema.Set)
-	groups := make([]string, rawSecurityGroups.Len())
-	for i, raw := range rawSecurityGroups.List() {
-		groups[i] = raw.(string)
+func resourcePortSecurityGroupsV2(v *schema.Set) []string {
+	var securityGroups []string
+	for _, v := range v.List() {
+		securityGroups = append(securityGroups, v.(string))
 	}
-	return groups
+	return securityGroups
 }
 
 func resourcePortFixedIpsV2(d *schema.ResourceData) interface{} {

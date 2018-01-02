@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/gator1/huaweicloud/openstack/networking/v2/extensions/elbaas/listeners"
+	"github.com/gator1/huaweicloud/huaweistack/networking/v2/extensions/elbaas/listeners"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
