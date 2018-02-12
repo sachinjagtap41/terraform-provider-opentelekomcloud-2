@@ -1,0 +1,4 @@
+- project:
+    check-generic-cloud:
+      jobs:
+        - terraform-provider-opentelekomcloud-acceptance-test-telekom
